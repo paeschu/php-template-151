@@ -17,7 +17,7 @@ switch($_SERVER["REQUEST_URI"]) {
 		$factory->getTemplateEngine();
 		break;
 	case "/login":
-		$ctr = $factory->getLoginContoller();
+		$ctr = $factory->getLoginController();
 		if($_SERVER["REQUEST_METHOD"] == 'GET')
 		{
 			$ctr->showLogin();
@@ -28,7 +28,15 @@ switch($_SERVER["REQUEST_URI"]) {
 		}
 		break;
 	case "/register":
-		
+		$ctr = $factory->getRegisterController();
+		if($_SERVER["REQUEST_METHOD"] == 'GET')
+		{
+			$ctr->showRegister();
+		}
+		else
+		{
+			$ctr->register($_POST);
+		}
 		break;
 	default:
 		$matches = [];

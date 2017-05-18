@@ -2,8 +2,6 @@
 
 namespace paeschu\Service\Register;
 
-use paeschu\Service\Register\RegisterService;
-
 
 class RegisterPdoService implements  RegisterService
 {
@@ -19,42 +17,44 @@ class RegisterPdoService implements  RegisterService
 
 	public function EmailExists($email)
 	{
-		$stmt = $this->pdo->prepare("SELECT email FROM user WHERE email=?");
+		$stmt = $this->pdo->prepare("SELECT email FROM users WHERE email=?");
 		$stmt->bindValue(1, $email);
 		$stmt->execute();
 			
 		if($stmt->rowCount() === 1)
 		{
-			return false;
+			return true;
 		}
 		else
 		{
-			return true;
+			return false;
 		}
 	}
+	
 	public function UsernameExists($username)
 	{
-		$stmt = $this->pdo->prepare("Select username FROM user WHERE username=?");
+		$stmt = $this->pdo->prepare("Select username FROM users WHERE username=?");
 		$stmt->bindValue(1, $username);
 		$stmt->execute();
 		
 		if($stmt->rowCount() === 1)
 		{
-			return false;
+			return true;
 		}
 		else
 		{
-			return true;
+			return false;
 		}
 	}
-	public function CreateUser($username, $firstname, $lastname , $password, $email)
+	
+	public function CreateUser($username, $email, $firstname, $lastname , $password)
 	{
-		$stmt = $this->pdo->prepare("INSERT INTO table_name (username, firstname, lastname, email, password) VALUES (?, ?, ?, ?, ?)");
+		$stmt = $this->pdo->prepare("INSERT INTO users (username, email, firstname, lastname, password) VALUES (?, ?, ?, ?, ?)");
 		$stmt->bindValue(1, $username);
-		$stmt->bindValue(2, $firstname);
-		$stmt->bindValue(2, $lastname);
-		$stmt->bindValue(2, $password);
 		$stmt->bindValue(2, $email);
+		$stmt->bindValue(3, $firstname);
+		$stmt->bindValue(4, $lastname);
+		$stmt->bindValue(5, $password);
 		
 		if($stmt->execute())
 		{
