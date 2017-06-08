@@ -135,9 +135,6 @@ CREATE TABLE `users` (
   PRIMARY KEY (`UserID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `users` (`UserID`, `Username`, `Email`, `Firstname`, `Lastname`, `Password`) VALUES
-(2,	'Paeschu',	'kunz.pas@gmail.com',	'Pascal',	'Kunz',	'Passw0rd!'),
-(3,	'Boss',	'boss@byom.de',	'Yan',	'Tsarov',	'Penis');
 
 DROP TABLE IF EXISTS `votes`;
 CREATE TABLE `votes` (
