@@ -62,4 +62,24 @@ class Factory
 		return new \paeschu\Controller\RegisterController($this->getTemplateEngine(), $this->getRegisterService());
 	}
 	
+	public function getHomeService()
+	{
+		return new \paeschu\Service\Home\HomePdoService($this->getPdo());
+	}
+	
+	public function getHomeController()
+	{
+		return new \paeschu\Controller\HomeController($this->getTemplateEngine(), $this->getHomeService());	
+	}
+	
+	public function getPostService()
+	{
+		return new \paeschu\Service\Post\PostPdoService($this->getPdo());	
+	}
+	
+	public function getCreatePostController()
+	{
+		return new \paeschu\Controller\CreatePostController($this->getTemplateEngine(), $this->getPostService());	
+	}
+	
 }

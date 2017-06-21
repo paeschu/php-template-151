@@ -8,13 +8,33 @@ require_once("../vendor/autoload.php");
 $config = parse_ini_file(__DIR__ . "/../config.ini", true);
 
 $factory = new paeschu\Factory($config);
+session_start();
+
 
 switch($_SERVER["REQUEST_URI"]) {
 	case "/testroute":
 		echo "Test blabla";
 		break;
 	case "/":
-		$factory->getTemplateEngine();
+		$factory->getHomeController();
+		break;
+	case "/createpost":
+		//if(isset($_SESSION['userID']))
+		//{
+			$ctr = $factory->getCreatePostController();
+			if($_SERVER["REQUEST_METHOD"] == 'GET')
+			{
+				$ctr->showCreatePost();
+			}
+			else
+			{
+				$ctr->create($_POST);	
+			}
+		//}
+		//else
+		//{
+			//echo "Melden Sie sich bitte zuerst an!";
+		//}
 		break;
 	case "/login":
 		$ctr = $factory->getLoginController();
