@@ -21,9 +21,13 @@ class LoginPdoService implements  LoginService
 		$stmt->bindValue(2, $password);
 		$stmt->execute();
 		 
+		$result = $stmt->fetchAll();
+		
 		if($stmt->rowCount() === 1)
 		{
 			$_SESSION["email"] = $username;
+			$_SESSION["password"] = $password;
+			$_SESSION['userID'] = $result[0]["UserID"];
 			return true;
 		}
 		else

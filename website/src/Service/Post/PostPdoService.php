@@ -16,7 +16,7 @@ class PostPdoService implements  PostService
 
 	public function getPost($postId)
 	{
-		$stmt = $this->pdo->prepare("SELECT * FROM post WHERE PostID=?");
+		$stmt = $this->pdo->prepare("SELECT * FROM post p INNER JOIN  WHERE PostID=?");
 		$stmt->bindValue(1, $postId);
 		$stmt->execute();
 			
@@ -30,15 +30,15 @@ class PostPdoService implements  PostService
 			return false;
 		}
 	}
-	public function createPost($userId, $title, $description, $dateTime)
+	public function createPost($userId, $title, $description,$nameItemOne,$nameItemTwo, $dateTime)
 	{
-		
-		$stmt = $this->pdo->prepare("INSERT INTO posts (UserID,Title,Description,DateTime) VALUES (?,?,?,?)");
-		$stmt->bindValue(1, $userId);
-		$stmt->bindValue(2, $title);
-		$stmt->bindValue(3, $description);
-		$stmt->bindValue(4, $image);
-		$stmt->bindValue(5, $dateTime);
+		$stmt = $this->pdo->prepare("INSERT INTO posts(UserID,Title,Description,ItemOneName,ItemTwoName,DateTime) VALUES (?,?,?,?,?,?)");
+		$stmt->bindValue(1,$userId);
+		$stmt->bindValue(2,$title);
+		$stmt->bindValue(3,$description);
+		$stmt->bindValue(4,$nameItemOne);
+		$stmt->bindValue(5,$nameItemTwo);
+		$stmt->bindValue(6,$dateTime);
 		$stmt->execute();
 		
 		if($stmt->rowCount() === 1)
@@ -50,5 +50,4 @@ class PostPdoService implements  PostService
 			return false;
 		}
 	}
-	
 }

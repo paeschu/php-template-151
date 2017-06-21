@@ -9,16 +9,11 @@
 		<p>Name Produkt 1:
 			<input type="text" name="nameItemOne" placeholder="Name" required="required">
 		</p>
-		<!-- p>Bild Produkt 1:
-			<input type="file" name="imageItemOne" required="required">
-		</p-->
+
 		<p>Name Produkt 2:
 			<input type="text" name="nameItemTwo" placeholder="Name" required="required">
 		</p>
-		<!-- p>Bild Produkt 2:
-			<input type="file" name="imageItemTwo" required="required">
-		</p-->
-		
+
 		<input type="submit" name="btnCreatePost" value="Erstellen">
 	</form>
 </html>

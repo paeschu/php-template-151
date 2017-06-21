@@ -4,4 +4,7 @@
 		<input type="password" name="password" placeholder="Passwort" required>
 		<input type="submit" name="btnLogin" value="Anmelden">
 	</form>
+	<p>
+	Falls noch &Uuml;ber keinen Account verf&uuml;gen, können Sie sich hier <a href="/register">registrieren</a>!
+	</p>
 </html>

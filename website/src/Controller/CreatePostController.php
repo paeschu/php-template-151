@@ -9,6 +9,7 @@ class CreatePostController
 {
 	private $template;
 	private $postService;
+	private $dateTime;
 
 	public function __construct(SimpleTemplateEngine $template, PostService $service)
 	{
@@ -38,7 +39,7 @@ class CreatePostController
 			return;
 		}
 		
-		$this->postService->createPost($userId, $title, $description, $dateTime);
+		$this->postService->createPost($_SESSION["userID"], $data["title"], $data["descriptionPost"], $data["nameItemOne"], $data["nameItemTwo"], date("Y-m-d H:i:s"));
 	}
 
 

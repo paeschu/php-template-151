@@ -1,14 +1,14 @@
 <?php
+session_start();
 use paeschu\Factory;
 use paeschu\Service\Login;
 
 error_reporting(E_ALL);
-
+require_once("../web/navigation.php");
 require_once("../vendor/autoload.php");
 $config = parse_ini_file(__DIR__ . "/../config.ini", true);
 
 $factory = new paeschu\Factory($config);
-session_start();
 
 
 switch($_SERVER["REQUEST_URI"]) {
@@ -16,11 +16,12 @@ switch($_SERVER["REQUEST_URI"]) {
 		echo "Test blabla";
 		break;
 	case "/":
-		$factory->getHomeController();
+		//$factory->getHomeController();
+		$factory->getIndexController();
 		break;
 	case "/createpost":
-		//if(isset($_SESSION['userID']))
-		//{
+		if(isset($_SESSION['email']))
+		{
 			$ctr = $factory->getCreatePostController();
 			if($_SERVER["REQUEST_METHOD"] == 'GET')
 			{
@@ -30,11 +31,11 @@ switch($_SERVER["REQUEST_URI"]) {
 			{
 				$ctr->create($_POST);	
 			}
-		//}
-		//else
-		//{
+		}
+		else
+		{
 			//echo "Melden Sie sich bitte zuerst an!";
-		//}
+		}
 		break;
 	case "/login":
 		$ctr = $factory->getLoginController();
@@ -47,6 +48,13 @@ switch($_SERVER["REQUEST_URI"]) {
 			$ctr->login($_POST);
 		}
 		break;
+	case "/logout":
+		if(isset($_SESSION['email']))
+		{
+			
+			session_destroy();
+		}
+	break;
 	case "/register":
 		$ctr = $factory->getRegisterController();
 		if($_SERVER["REQUEST_METHOD"] == 'GET')
@@ -66,4 +74,3 @@ switch($_SERVER["REQUEST_URI"]) {
 		}
 		echo "Not Found";
 }
-
