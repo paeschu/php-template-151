@@ -51,4 +51,3 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`UserID`, `Username`, `Email`, `Firstname`, `Lastname`, `Password`) VALUES
 (1,	'Paeschu',	'kunz.pas@gmail.com',	'Pascal',	'Kunz',	'Passw0rd!');
 
--- 2017-06-22 08:56:26
