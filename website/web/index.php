@@ -66,7 +66,20 @@ switch($_SERVER["REQUEST_URI"]) {
 			$ctr->register($_POST);
 		}
 		break;
+		case "/post":
+			$ctr = $factory->getPostController();
+			if(isset($_GET["id"]))
+			{
+				$ctr->showPost($_GET["id"]);
+			}
+			else
+			{
+				
+			}
+			break;
 	default:
+		$factory->getPostController()->showPost($_GET["id"]);
+		
 		$matches = [];
 		if(preg_match("|^/hello/(.+)$|", $_SERVER["REQUEST_URI"], $matches)) {
 			($factory->getIndexController()->greet($matches[1]));

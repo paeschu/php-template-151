@@ -16,14 +16,15 @@ class PostPdoService implements  PostService
 
 	public function getPost($postId)
 	{
-		$stmt = $this->pdo->prepare("SELECT * FROM post p INNER JOIN  WHERE PostID=?");
+		$stmt = $this->pdo->prepare("SELECT * FROM posts WHERE postID = ?");
 		$stmt->bindValue(1, $postId);
 		$stmt->execute();
 			
+		var_dump($stmt->fetchAll());
+		exit;
 		if($stmt->rowCount() === 1)
 		{
-			$_SESSION["email"] = $username;
-			return true;
+			return $stmt->fetchAll();
 		}
 		else
 		{

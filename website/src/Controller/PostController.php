@@ -17,9 +17,9 @@ class PostController
 		$this->postService = $service;
 	}
 
-	public function showPost()
+	public function showPost($postId)
 	{
-		echo $this->template->render("post.html.php");
+		echo $this->template->render("post.html.php", $this->postService->getPost($postId));
 	}
 
 	public function register(array $data)

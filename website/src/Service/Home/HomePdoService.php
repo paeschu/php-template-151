@@ -21,9 +21,9 @@ class HomePdoService implements  HomeService
 		$stmt = $this->pdo->prepare("SELECT PostID, Title, ImagePath FROM posts");
 		$stmt->execute();
 			
-		if($stmt->rowCount() === 1)
+		if($stmt->rowCount() > 0)
 		{
-			return $stmt;
+			return $stmt->fetchAll();
 		}
 		else
 		{

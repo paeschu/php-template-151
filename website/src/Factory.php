@@ -41,6 +41,9 @@ class Factory {
 	public function getPostService() {
 		return new \paeschu\Service\Post\PostPdoService ( $this->getPdo () );
 	}
+	public function getPostController(){
+		return new \paeschu\Controller\PostController($this->getTemplateEngine(), $this->getPostService());
+	}
 	public function getCreatePostController() {
 		return new \paeschu\Controller\CreatePostController ( $this->getTemplateEngine (), $this->getPostService () );
 	}
