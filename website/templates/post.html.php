@@ -1,23 +1,23 @@
 <html>
 	<head>
-   		<title><?= $title ?></title>
+   		<title><?= $postArray["Title"] ?></title>
 	</head>
 	<form method="GET" id="post">
 		<h1>
-		<?= $title ?>
+		<?= htmlspecialchars($postArray["Title"]) ?>
 		</h1>
 		<p>
-		<?= $description ?>
+		<?= htmlspecialchars($postArray["Description"]) ?>
 		</p>
 		<p>
-		<?= $itemOneName ?>
-		<?= $itemOneImage ?>
+		<?= htmlspecialchars($postArray["ItemOneName"]) ?>
+		<!-- ?= $itemOneImage ?-->
 		</p>
 		<p>
-		<?= $itemTwoName ?>
-		<a href="">
-		<img border="0" alt=<?= $itemTwoName ?> src="<?= $image ?>" width="300" height="300">
-		</a>
+		<?= htmlspecialchars($postArray["ItemTwoName"]) ?>
+		<!-- a href="">
+		<img border="0" alt=// $itemTwoName ?> src="  //$ image ?>" width="300" height="300">
+		</a-->
 		</p>
 	</form>
 </html>

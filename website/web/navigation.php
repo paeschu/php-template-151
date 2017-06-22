@@ -1,5 +1,5 @@
 <head>
-<link rel="stylesheet" href="/css/bootstrap.css" />
+<link href="css/stylesheet.css" rel="stylesheet" type="text/css">
 </head>
 <a href="/home">Home</a>
 <?php 

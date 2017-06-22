@@ -16,14 +16,13 @@ class PostPdoService implements  PostService
 
 	public function getPost($postId)
 	{
-		$stmt = $this->pdo->prepare("SELECT * FROM posts WHERE postID = ?");
+		$stmt = $this->pdo->prepare("SELECT Title,Description,ItemOneName,ItemTwoName FROM posts WHERE postID = ?");
 		$stmt->bindValue(1, $postId);
 		$stmt->execute();
 			
-		var_dump($stmt->fetchAll());
-		exit;
 		if($stmt->rowCount() === 1)
 		{
+			
 			return $stmt->fetchAll();
 		}
 		else

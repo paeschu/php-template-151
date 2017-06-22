@@ -4,9 +4,8 @@ namespace paeschu\Controller;
 
 use paeschu\SimpleTemplateEngine;
 use paeschu\Service\Home\HomeService;
-use paeschu\Service\Post\PostService;
 
-class LoginController {
+class HomeController {
 	/**
 	 *
 	 * @var paeschu\SimpleTemplateEngine Template engines to render output

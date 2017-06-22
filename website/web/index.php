@@ -11,7 +11,7 @@ $config = parse_ini_file(__DIR__ . "/../config.ini", true);
 $factory = new paeschu\Factory($config);
 
 
-switch($_SERVER["REQUEST_URI"]) {
+switch(strtolower(explode("?", $_SERVER["REQUEST_URI"],2)[0])) {
 	case "/testroute":
 		echo "Test blabla";
 		break;
@@ -70,16 +70,15 @@ switch($_SERVER["REQUEST_URI"]) {
 			$ctr = $factory->getPostController();
 			if(isset($_GET["id"]))
 			{
-				$ctr->showPost($_GET["id"]);
+				$ctr->showPost($_GET["id"]);		
 			}
 			else
 			{
-				
+				echo "Not Found";
 			}
+
 			break;
-	default:
-		$factory->getPostController()->showPost($_GET["id"]);
-		
+	default:		
 		$matches = [];
 		if(preg_match("|^/hello/(.+)$|", $_SERVER["REQUEST_URI"], $matches)) {
 			($factory->getIndexController()->greet($matches[1]));
