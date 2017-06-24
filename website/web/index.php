@@ -79,9 +79,17 @@ switch(strtolower(explode("?", $_SERVER["REQUEST_URI"],2)[0])) {
 
 			break;
 		case"/activation":
+			$ctr = $factory->getActivationController();
 			if(isset($_GET["account"]))
 			{
-				
+				if(isset($_GET["securityKey"]))
+				{
+					$ctr->Activate($_GET["account"], $_GET["securityKey"]);					
+				}
+				else
+				{
+					$ctr->SetNewSecurityKey($_GET["account"]);
+				}
 			}
 			else
 			{

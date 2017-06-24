@@ -56,7 +56,7 @@ class RegisterPdoService implements  RegisterService
 		$stmt->bindValue(4, $lastname);
 		$stmt->bindValue(5, $password);
 		
-		if($stmt->execute() && $this->InsertToActivation($email,$securityKey))
+		if($stmt->execute() && $this->InsertToActivation($email, $securityKey))
 		{
 			return true;
 		}
@@ -66,13 +66,31 @@ class RegisterPdoService implements  RegisterService
 		}
 	}
 	
-	private function InsertToActivation($email)
+	private function InsertToActivation($email, $securityKey)
 	{
-		$stmt = $this->pdo->prepare("INSERT INTO activation (UserID, SecurityKey) SELECT UserID FROM users WHERE Email = ?");
+		$stmt = $this->pdo->prepare("INSERT INTO activation (UserID) SELECT UserID FROM users WHERE Email = ?;");
 		$stmt->bindValue(1, $email);
 		$stmt->execute();
 		
-		if($stmt->rowCount())
+		if($stmt->rowCount() && $this->InsertSecurtiyKey($email, $securityKey))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	private function InsertSecurtiyKey($email, $securityKey)
+	{
+		$stmt = $this->pdo->prepare("UPDATE activation SET SecurityKey = ? WHERE UserID = (SELECT UserID FROM users WHERE Email = ?);");
+		$stmt->bindValue(1,$securityKey);
+		$stmt->bindValue(2, $email);
+		
+		$stmt->execute();
+		
+		if($stmt->rowCount() === 1)
 		{
 			return true;
 		}

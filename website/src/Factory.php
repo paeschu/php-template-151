@@ -30,7 +30,7 @@ class Factory {
 		return new \paeschu\Service\Register\RegisterPdoService ( $this->getPdo () );
 	}
 	public function getRegisterController() {
-		return new \paeschu\Controller\RegisterController ( $this->getTemplateEngine (), $this->getRegisterService () );
+		return new \paeschu\Controller\RegisterController ( $this->getTemplateEngine (), $this->getRegisterService (), $this->getActivationController(),$this->getMailer());
 	}
 	public function getHomeService() {
 		return new \paeschu\Service\Home\HomePdoService ( $this->getPdo () );
@@ -46,5 +46,21 @@ class Factory {
 	}
 	public function getCreatePostController() {
 		return new \paeschu\Controller\CreatePostController ( $this->getTemplateEngine (), $this->getPostService () );
+	}
+	public function getActivationService()
+	{
+		return new \paeschu\Service\Activation\ActivationPdoService($this->getPdo());
+	}
+	public function getActivationController()
+	{
+		return new \paeschu\Controller\ActivationController($this->getTemplateEngine(), $this->getActivationService());	
+	}
+	public function getMailer()
+	{
+		return \Swift_Mailer::newInstance(
+				\Swift_SmtpTransport::newInstance($this->config['mailer']['host'], $this->config['mailer']['port'], $this->config['mailer']['security'])
+				->setUsername($this->config['mailer']['user'])
+				->setPassword($this->config['mailer']['password'])
+				);
 	}
 }

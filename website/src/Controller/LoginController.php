@@ -12,7 +12,6 @@ class LoginController {
 	 */
 	private $template;
 	private $loginService;
-	
 	/**
 	 *
 	 * @param

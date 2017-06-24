@@ -3,7 +3,7 @@
 namespace paeschu\Service\Activation;
 
 
-class ActivationPdoService implements  ActivationService
+class ActivationPdoService implements ActivationService
 {
 	/**
 	 * @var \PDO
@@ -14,29 +14,13 @@ class ActivationPdoService implements  ActivationService
 	{
 		$this->pdo = $pdo;
 	}
-	
-	public function SetActivationCode($userId, $securityKey)
+
+	public function CheckSecurtiyKey($email)
 	{
-		$stmt = $this->pdo->prepare("INSERT INTO activation (SecurityKey) VALUES (?) WHERE ActivationID = ?");
-		$stmt->bindValue(1, $securityKey);
-		$stmt->bindValue(2, $ActivationId);
-				
-		if($stmt->execute())
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-		
-	}
-	public function GetActivationCode($userId)
-	{
-		$stmt = $this->pdo->prepare("SELECT SecurityKey FROM activations WHERE UserID = ?");
-		$stmt->bindValue(1, $userId);
+		$stmt = $this->pdo->prepare("SELECT SecurityKey FROM activation WHERE UserID = (SELECT UserID FROM users WHERE Email = ?);");
+		$stmt->bindValue(1, $email);
 		$stmt->execute();
-		
+
 		if($stmt->rowCount() === 1)
 		{
 			return $stmt->fetchAll();
@@ -47,4 +31,37 @@ class ActivationPdoService implements  ActivationService
 		}
 	}
 
+	public function RemoveActivation($email)
+	{
+		$stmt = $this->pdo->prepare("DELETE FROM activation WHERE UserID = (SELECT UserID FROM users WHERE Email = ?);");
+		$stmt->bindValue(1, $email);
+
+		$stmt->execute();
+			
+		if($stmt->rowCount() > 0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	public function UpdateActivationKey($email, $securityKey)
+	{
+		$stmt = $this->pdo->prepare("UPDATE activation SET SecurityKey = ? WHERE UserID = (SELECT UserID FROM users WHERE Email = ?);");
+		$stmt->bindValue(1, $securityKey);
+		$stmt->bindValue(2, $email);
+		$stmt->execute();
+
+		if($stmt->rowCount() === 1)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 }

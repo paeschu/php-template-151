@@ -9,11 +9,15 @@ class RegisterController
 {
 	private $template;
 	private $registerService;
+	private $controller;
+	private $mailer;
 	
-	public function __construct(SimpleTemplateEngine $template, RegisterService $service)
+	public function __construct(SimpleTemplateEngine $template, RegisterService $service, ActivationController $controller, \Swift_Mailer $mailer)
 	{
 		$this->template = $template;
 		$this->registerService = $service;
+		$this->controller = $controller;
+		$this->mailer = $mailer;
 	}
 	
 	public function showRegister()
@@ -51,9 +55,18 @@ class RegisterController
 			$this->showRegister();
 			return;
 		}
-			
-		$this->registerService->CreateUser($data["username"], $data["email"], $data["firstname"], $data["lastname"], $data["password"]);
-		
+		$securityKey = $this->controller->NewSecurityKey();
+		$this->registerService->CreateUser($data["username"], $data["email"], $data["firstname"], $data["lastname"], $data["password"], $securityKey);
+		$this->SendActivationEmail($data["email"], $securityKey);
+	}
+	
+	private function SendActivationEmail($email, $securityKey)
+	{
+		$message = (new \Swift_Message('Bestaetigung'))
+		->setFrom(['kunz.pas@gmail.com' => 'noreply'])
+		->setTo([$email])
+		->setBody("Oeffnen Sie diesen Link um Ihren Account zu aktivieren https://localhost/activation?account=$email&securityKey=$securityKey");
+		$this->mailer->send($message);
 	}
 		
 		

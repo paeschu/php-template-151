@@ -15,10 +15,24 @@ class ActivationController
 		$this->template = $template;
 		$this->service = $service;
 	}
-
-	public function SetSecurityKey($userId)
+	
+	public function Activate($userId,$securityKey)
 	{
-		$securityKey = rand(8,8);
-		$this->service->SetActivationCode($userId, $securityKey);
+		$dataBaseSecurityKey = $this->service->CheckSecurtiyKey($userId);
+		if($dataBaseSecurityKey == $securityKey)
+		{
+			$this->service->RemoveActivation($userId);
+		}
 	}
+	
+	public function SetNewSecurityKey($email)
+	{
+		$this->service->UpdateActivationKey($email,$this->NewSecurityKey());
+	}
+	
+	public function NewSecurityKey()
+	{
+		return rand(10000000,99999999);
+	}
+
 }
