@@ -33,7 +33,7 @@ class Factory {
 		return new \paeschu\Controller\RegisterController ( $this->getTemplateEngine (), $this->getRegisterService (), $this->getActivationController(),$this->getMailer());
 	}
 	public function getHomeService() {
-		return new \paeschu\Service\Home\HomePdoService ( $this->getPdo () );
+		return new \paeschu\Service\Home\HomePdoService ( $this->getPdo() );
 	}
 	public function getHomeController() {
 		return new \paeschu\Controller\HomeController ( $this->getTemplateEngine (), $this->getHomeService () );

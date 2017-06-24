@@ -50,4 +50,25 @@ class PostPdoService implements  PostService
 			return false;
 		}
 	}
+	
+	public function getComments($postId)
+	{
+		$stmt = $this->pdo->prepare("SELECT c.Title, c.Text, u.Username FROM comments c INNER JOIN posts p on c.PostID = p.PostID INNER JOIN users u on c.UserID = u.UserID WHERE p.PostID = ?");
+		$stmt->bindValue(1, $postId);
+		
+		$stmt->execute();
+		
+		if($stmt->rowCount() > 0)
+		{
+			return $stmt->fetchAll();
+		}
+		else
+		{
+			return false;
+		}
+	}
+	public function insertComment($title, $text, $userID, $postID)
+	{
+		//$stmt = $this->pdo->prepare("INSERT INTO comments ()");
+	}
 }

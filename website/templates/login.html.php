@@ -1,4 +1,8 @@
 <html>
+<head>
+<?php require_once("../web/css/bootstrap.php");?>
+</head>
+<body>
 	<form method="POST" id="login">
 		<input type="email" name="email" placeholder="E-Mail" <?= isset($data["email"]) ? htmlspecialchars($data["email"]) : "" ?> required="required" >
 		<input type="password" name="password" placeholder="Passwort" required>
@@ -7,4 +11,5 @@
 	<p>
 	Falls noch &Uuml;ber keinen Account verf&uuml;gen, können Sie sich hier <a href="/register">registrieren</a>!
 	</p>
+</body>
 </html>

@@ -68,9 +68,14 @@ switch(strtolower(explode("?", $_SERVER["REQUEST_URI"],2)[0])) {
 		break;
 		case "/post":
 			$ctr = $factory->getPostController();
-			if(isset($_GET["id"]))
+			if(isset($_GET["id"]) && $_SERVER["REQUEST_METHOD"] == 'GET')
 			{
-				$ctr->showPost($_GET["id"]);		
+				$ctr->showPost($_GET["id"]);
+				
+			}
+			else if($_SERVER["REQUEST_METHOD"] == 'POST')
+			{
+				$ctr->addComment($_POST);
 			}
 			else
 			{

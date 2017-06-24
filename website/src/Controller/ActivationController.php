@@ -16,12 +16,12 @@ class ActivationController
 		$this->service = $service;
 	}
 	
-	public function Activate($userId,$securityKey)
+	public function Activate($email,$securityKey)
 	{
-		$dataBaseSecurityKey = $this->service->CheckSecurtiyKey($userId);
-		if($dataBaseSecurityKey == $securityKey)
+		$dataBaseSecurityKey = $this->service->CheckSecurtiyKey($email);
+		if($dataBaseSecurityKey[0]["SecurityKey"] == $securityKey)
 		{
-			$this->service->RemoveActivation($userId);
+			$this->service->RemoveActivation($email);
 		}
 	}
 	

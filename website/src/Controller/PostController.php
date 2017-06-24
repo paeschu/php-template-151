@@ -19,10 +19,15 @@ class PostController
 	public function showPost($postId)
 	{		
 		$post = $this->postService->getPost($postId);
-		echo $this->template->render("post.html.php", ["postArray" => $post[0]]);
+		
+		$comments = $this->postService->getComments($postId);
+		echo $this->template->render("post.html.php", ["postArray" => $post[0]], ["commentArray" => $comments[0]]);
 	}
-
-	
-
+	public function addComment($data)
+	{
+		var_dump($data);
+		exit;
+		$this->postService->insertComment($data["commentTitle"], $data["commentText"]);
+	}
 
 }
