@@ -26,13 +26,20 @@ class LoginController {
 		echo $this->template->render ( "login.html.php" );
 	}
 	public function login(array $data) {
-		if (! array_key_exists ( "email", $data ) or ! array_key_exists ( "password", $data )) {
+		if (! array_key_exists ( "email", $data ) or ! array_key_exists ( "password", $data )) 
+		{
 			echo "Bitte f&uuml;llen Sie alle Felder aus.";
 			$this->showLogin ();
 			return;
 		}
-		
-		if ($this->loginService->authenticate ( $data ["email"], $data ["password"] )) {
+
+		if($this->loginService->checkActivation($data["email"]))
+		{
+			echo $this->template->render("activation.html.php", $data);
+			return;
+		}
+		elseif ($this->loginService->authenticate ( $data ["email"], $data ["password"] )) {
+			
 			
 		} else {
 			echo "Falsches Passwort oder falsche E-Mailadresse.";

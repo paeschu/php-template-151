@@ -14,10 +14,10 @@ class LoginPdoService implements  LoginService
 		$this->pdo = $pdo;
 	}
 	
-	public function authenticate($username, $password)
+	public function authenticate($email, $password)
 	{
 		$stmt = $this->pdo->prepare("SELECT * FROM users WHERE email=? AND password=?");
-		$stmt->bindValue(1, $username);
+		$stmt->bindValue(1, $email);
 		$stmt->bindValue(2, $password);
 		$stmt->execute();
 		 
@@ -25,7 +25,7 @@ class LoginPdoService implements  LoginService
 		
 		if($stmt->rowCount() === 1)
 		{
-			$_SESSION["email"] = $username;
+			$_SESSION["email"] = $email;
 			$_SESSION["password"] = $password;
 			$_SESSION['userID'] = $result[0]["UserID"];
 			return true;
@@ -34,5 +34,22 @@ class LoginPdoService implements  LoginService
 		{
 			return false;
 		}
+	}
+	
+	public function checkActivation($email)
+	{
+		$stmt = $this->pdo->prepare("SELECT ActivationID FROM activation WHERE UserID = (SELECT UserID FROM users WHERE Email = ?)");
+		$stmt->bindValue(1, $email);
+		$stmt->execute();
+		
+		if($stmt->rowCount() === 1)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+		
 	}
 }

@@ -47,7 +47,7 @@ class RegisterPdoService implements  RegisterService
 		}
 	}
 	
-	public function CreateUser($username, $email, $firstname, $lastname , $password)
+	public function CreateUser($username, $email, $firstname, $lastname , $password, $securityKey)
 	{
 		$stmt = $this->pdo->prepare("INSERT INTO users (username, email, firstname, lastname, password) VALUES (?, ?, ?, ?, ?)");
 		$stmt->bindValue(1, $username);
@@ -56,13 +56,30 @@ class RegisterPdoService implements  RegisterService
 		$stmt->bindValue(4, $lastname);
 		$stmt->bindValue(5, $password);
 		
-		if($stmt->execute())
+		if($stmt->execute() && $this->InsertToActivation($email,$securityKey))
 		{
-			return true;	
+			return true;
 		}
 		else
 		{
 			return false;	
 		}
 	}
+	
+	private function InsertToActivation($email)
+	{
+		$stmt = $this->pdo->prepare("INSERT INTO activation (UserID, SecurityKey) SELECT UserID FROM users WHERE Email = ?");
+		$stmt->bindValue(1, $email);
+		$stmt->execute();
+		
+		if($stmt->rowCount())
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
 }

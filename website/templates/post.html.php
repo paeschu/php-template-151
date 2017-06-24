@@ -3,7 +3,7 @@
    		<title><?= $postArray["Title"] ?></title>
 	</head>
 	<form method="GET" id="post">
-		<h1>
+		<h1 class="title">
 		<?= htmlspecialchars($postArray["Title"]) ?>
 		</h1>
 		<p>

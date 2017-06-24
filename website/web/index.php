@@ -78,6 +78,16 @@ switch(strtolower(explode("?", $_SERVER["REQUEST_URI"],2)[0])) {
 			}
 
 			break;
+		case"/activation":
+			if(isset($_GET["account"]))
+			{
+				
+			}
+			else
+			{
+				echo "Not Found";
+			}
+		break;
 	default:		
 		$matches = [];
 		if(preg_match("|^/hello/(.+)$|", $_SERVER["REQUEST_URI"], $matches)) {
